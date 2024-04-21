@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 def frequency():
     np.random.seed(5)
     student_grades = np.random.normal(68, 15, 50)
-
+    plt.figure(figsize=(6.4, 4.8))
+    
     bins = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 
     plt.xlabel('Grades')
