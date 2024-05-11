@@ -63,4 +63,4 @@ class Neuron():
         EWx = np.matmul(self.__W, X) + self.__b  # z (sum of weight and X's)
         sigmoid = 1 / (1 + np.exp(-EWx))  # (σ): g(z) = 1 / (1 + e^{-z})
         self.__A = sigmoid
-        return self.__
+        return self.__A
