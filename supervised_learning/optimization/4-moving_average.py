@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Calculates the weighted 
-   moving average of a data set
+"""Calculates the weighted moving average of a data set
 """
 
 
