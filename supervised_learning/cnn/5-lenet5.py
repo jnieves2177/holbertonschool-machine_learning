@@ -1,61 +1,65 @@
 #!/usr/bin/env python3
 """This script implements Lenet5 using Keras"""
 
-from tensorflow import keras as K
+import tensorflow.keras as K
 
 
 def lenet5(X):
-    """
-    Function to implement Lenet-5 using keras
+    """Builds a modified version of the `LeNet-5` architecture using Keras
+
     Args:
-        X: X is a K.Input of shape (m, 28, 28, 1)
-           containing the input images for the
-    Returns: K.Model compiled to use Adam optimization
-             (with default hyperparameters) and accuracy
-             metrics
+        X (keras.input): Containing the input images for the network with shape
+            (m, 28, 28, 1) where m is the number of images.
+
+    Returns:
+        keras.model: A keras model compiled to use `Adam` optimization and
+        accuracy mertics.
+
     """
-
-    # initialize global parameters
-    init = K.initializers.he_normal()
-
-    # Set the variable of activation 'relu'
-    activation = 'relu'
-
-    # First CONVNET
-    conv1 = K.layers.Conv2D(filters=6, kernel_size=5,
-                            padding='same', activation=activation,
-                            kernel_initializer=init)(X)
-    # Pool net of CONV1
-    pool1 = K.layers.MaxPooling2D(pool_size=[2, 2], strides=2)(conv1)
-
-    # Second CONVNET
-    conv2 = K.layers.Conv2D(filters=16, kernel_size=5,
-                            padding='valid', activation=activation,
-                            kernel_initializer=init)(pool1)
-    # Pool net of CONV2
-    pool2 = K.layers.MaxPooling2D(pool_size=[2, 2], strides=2)(conv2)
-
-    # Flatten the convolutional layers
-    flatten = K.layers.Flatten()(pool2)
-
-    # Fully connected layer 1
-    FC1 = K.layers.Dense(units=120, activation=activation,
-                         kernel_initializer=init)(flatten)
-    # Fully connected layer 2
-    FC2 = K.layers.Dense(units=84, activation=activation,
-                         kernel_initializer=init)(FC1)
-    # Fully connected layer 3
-    FC3 = K.layers.Dense(units=10, kernel_initializer=init,
-                         activation='softmax')(FC2)
-
-    # Create Model
-    model = K.models.Model(X, FC3)
-
-    # Set Adam optimizer
-    adam = K.optimizers.Adam()
-
-    # Compile model
-    model.compile(optimizer=adam, loss='categorical_crossentropy',
-                  metrics=['accuracy'])
-
+    C1 = K.layers.Conv2D(
+        filters=6,
+        kernel_size=(5, 5),
+        padding='same',
+        strides=(2, 2),
+        activation='relu',
+        kernel_initializer='he_normal'
+    )(X)
+    M1 = K.layers.MaxPool2D(
+        pool_size=(2, 2),
+        strides=(2, 2)
+    )(C1)
+    C2 = K.layers.Conv2D(
+        filters=16,
+        kernel_size=(5, 5),
+        padding='valid',
+        strides=(2, 2),
+        activation='relu',
+        kernel_initializer='he_normal'
+    )(M1)
+    M2 = K.layers.MaxPool2D(
+        pool_size=(2, 2),
+        strides=(2, 2)
+    )(C2)
+    CF = K.layers.Flatten()(C2)
+    F1 = K.layers.Dense(
+        units=120,
+        kernel_initializer="he_normal",
+        activation='relu'
+    )(CF)
+    F2 = K.layers.Dense(
+        units=84,
+        kernel_initializer="he_normal",
+        activation='relu'
+    )(F1)
+    F3 = K.layers.Dense(
+        units=10,
+        kernel_initializer="he_normal",
+        activation='softmax'
+    )(F2)
+    model = K.Model(inputs=X, outputs=F3)
+    model.compile(
+        optimizer='adam',
+        loss='categorical_crossentropy',
+        metrics=['accuracy']
+    )
     return model
