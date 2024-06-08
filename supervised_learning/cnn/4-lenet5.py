@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """This script implements a Lenet5 using tensorflow"""
 
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 
 def lenet5(x, y):
