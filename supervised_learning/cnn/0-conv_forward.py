@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """This Script forwards propagate over a convolutional layer in a NN"""
 
 import numpy as np
