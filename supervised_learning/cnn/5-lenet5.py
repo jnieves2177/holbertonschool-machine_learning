@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """This script implements Lenet5 using Keras"""
 
-import tensorflow.keras as K
+from tensorflow import keras as K
 
 
 def lenet5(X):
