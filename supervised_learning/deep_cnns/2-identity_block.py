@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """This script creates an inception block"""
 
-from tensorflow import keras as K
 
 
 def identity_block(A_prev, filters):
